@@ -1,14 +1,30 @@
-
-import { pingPong } from './ping-pong';
+import { compareCard, addSelection, gameStatus, clearCard } from './memory';
 import './styles.css';
 
+
 $(document).ready(function() {
-  $('#ping-pong-form').submit(function(event) {
-    event.preventDefault();
-    var goal = $('#goal').val();
-    var output = pingPong(goal);
-    output.forEach(function(element) {
-      $('#solution').append("<li>" + element + "</li>");
-    });
+  $('.cell').click(function() {
+    $(this).addClass("mouseSelected")
+    if (gameStatus() === 1) {
+      addSelection($(this).attr('id'));
+    } else if (gameStatus() === 2) {
+      addSelection($(this).attr('id'));
+      if (compareCard()) {
+        $('.endgame').text("they match");       
+      }
+      else {
+        $('.endgame').text("no match");
+      }
+      // $("td").each(function(element){
+      //   $('.endgame').append($(element).text());
+      //   if ($(element).attr('mouseSelected')) {
+      //     $(element).removeClass('glow');
+      //   }
+      // });
+      clearCard();    
+    }
+
+
+      
   });
 });
